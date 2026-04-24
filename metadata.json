@@ -1,0 +1,8 @@
+{
+  "name": "MyTripPlanner",
+  "description": "A travel and lifestyle web application featuring an AI itinerary planner, on-route food hunting, and nearby essentials finder.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": []
+}
