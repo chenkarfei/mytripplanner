@@ -12,7 +12,7 @@ export default function PlannerPage() {
               AI <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple text-glow-cyan">Itinerary Planner</span>
             </h1>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light">
-              Craft the perfect trip. Tell us where, your vibe, and your pacing, and we'll generate a day-by-day masterpiece.
+              Craft the perfect trip. Tell us where, your vibe, and your pacing, and we&apos;ll generate a day-by-day masterpiece.
             </p>
           </div>
           

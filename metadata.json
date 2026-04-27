@@ -1,6 +1,6 @@
 {
   "name": "MyTripPlanner",
-  "description": "A travel and lifestyle web application featuring an AI itinerary planner, on-route food hunting, and nearby essentials finder.",
+  "description": "Smart travel planner that optimizes multi-city routes, predicts crowd density to avoid peak holiday surges, and provides family-friendly travel logic.",
   "requestFramePermissions": [
     "geolocation"
   ],
