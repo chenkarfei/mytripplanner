@@ -91,7 +91,10 @@ export default function ItineraryPlannerClient() {
 
       SPECIFIC CROWD & FAMILY INSTRUCTIONS:
       1. Crowd Avoidance: For every activity, suggest the best specific day of the week or time of day to avoid heavy crowds (e.g., weekends vs weekdays, early mornings).
-      2. Public Holidays: Check if the trip overlaps with any major local public holidays or school holidays for ${destination} and warn the user in the prompt output or tips.
+      2. Public Holidays & Date Accuracy: CRITICAL: Verify the exact dates of public holidays for the year 2026 in the specific region (e.g., Malaysia). 
+         - NOTE: For Malaysia in 2026, Wesak Day is May 31, NOT May 3. 
+         - Labor Day is May 1. 
+         - Ensure you do not incorrectly group holidays or warn about clashing dates that are weeks apart.
       3. Family & Stroller Comfort: Provide a "Family Tip" for attractions, noting if they are stroller-friendly or if there are specific challenges for families (like the West Lake bus situation or Disney holiday surges).`;
 
     if (mustSee) {
