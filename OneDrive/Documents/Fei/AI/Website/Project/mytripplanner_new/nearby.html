@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nearby Essentials | MyTripPlanner</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ["'Space Grotesk'", 'ui-monospace', 'monospace'],
+            sans: ["'Inter'", 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            gold:    { DEFAULT: '#D4AF37', muted: '#A88D52' },
+            sky:     '#0EA5E9',
+            emerald: '#10B981',
+            rose:    '#F43F5E',
+            warning: '#F59E0B',
+            primary: '#0B1F3A',
+            'dark-card':        '#0F2847',
+            'dark-card-hover':  '#152E52',
+            'dark-border':      '#1E3A5F',
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      if (t === 'dark') document.documentElement.setAttribute('data-theme','dark');
+    })();
+  </script>
+</head>
+<body class="main-wrap">
+
+  <!-- ── Navigation ──────────────────────────────────────────────── -->
+  <nav class="nav-root">
+    <div class="nav-inner">
+      <div class="nav-bar">
+        <div class="flex items-center">
+          <a href="index.html" class="nav-logo">
+            <span class="nav-logo-star">✦</span>
+            <span class="nav-logo-text gradient-text-gold-sky text-glow-gold">MyTripPlanner</span>
+          </a>
+        </div>
+        <div class="nav-links">
+          <a href="index.html"   class="nav-link">Dashboard</a>
+          <a href="planner.html" class="nav-link"><i data-lucide="map"></i>Itinerary Planner</a>
+          <a href="food.html"    class="nav-link"><i data-lucide="utensils"></i>Food Hunter</a>
+          <a href="nearby.html"  class="nav-link"><i data-lucide="navigation"></i>Nearby Me</a>
+        </div>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+            <span id="icon-sun"  style="display:none"><i data-lucide="sun"></i></span>
+            <span id="icon-moon"><i data-lucide="moon"></i></span>
+          </button>
+          <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu">
+            <span id="icon-menu-open"><i data-lucide="menu"></i></span>
+            <span id="icon-menu-close" style="display:none"><i data-lucide="x"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="mobile-menu-inner">
+        <a href="index.html"   class="nav-link">Dashboard</a>
+        <a href="planner.html" class="nav-link"><i data-lucide="map"></i>Itinerary Planner</a>
+        <a href="food.html"    class="nav-link"><i data-lucide="utensils"></i>Food Hunter</a>
+        <a href="nearby.html"  class="nav-link"><i data-lucide="navigation"></i>Nearby Me</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main ────────────────────────────────────────────────────── -->
+  <main class="main-wrap flex items-center justify-center p-8 bg-surface">
+    <div class="coming-soon-card shadow-glow-emerald">
+      <div class="coming-soon-icon" style="background:rgba(16,185,129,0.1)">
+        <i data-lucide="navigation" style="color:var(--color-emerald)"></i>
+      </div>
+      <h1 style="font-family:'Space Grotesk',monospace;font-size:1.875rem;font-weight:700;margin-bottom:0.75rem" class="text-text">
+        Nearby Essentials
+      </h1>
+      <p style="color:var(--color-text-muted);font-size:0.9375rem;line-height:1.625;margin-bottom:2rem">
+        Find the closest open ATMs, hospitals, and food spots instantly. This feature is coming soon.
+      </p>
+      <a href="index.html"
+         style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.625rem 1.5rem;background:var(--color-emerald);color:white;border-radius:0.75rem;font-weight:600;text-decoration:none;transition:background 0.2s"
+         onmouseover="this.style.background='#0d9668'"
+         onmouseout="this.style.background='var(--color-emerald)'">
+        <i data-lucide="arrow-left"></i> Back to Dashboard
+      </a>
+    </div>
+  </main>
+
+  <script src="js/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () { lucide.createIcons(); });
+  </script>
+</body>
+</html>

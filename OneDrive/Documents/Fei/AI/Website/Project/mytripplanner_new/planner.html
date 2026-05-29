@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Itinerary Planner | MyTripPlanner</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ["'Space Grotesk'", 'ui-monospace', 'monospace'],
+            sans: ["'Inter'", 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            gold:    { DEFAULT: '#D4AF37', muted: '#A88D52' },
+            sky:     '#0EA5E9',
+            emerald: '#10B981',
+            rose:    '#F43F5E',
+            warning: '#F59E0B',
+            primary: '#0B1F3A',
+            'dark-card':        '#0F2847',
+            'dark-card-hover':  '#152E52',
+            'dark-border':      '#1E3A5F',
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      if (t === 'dark') document.documentElement.setAttribute('data-theme','dark');
+    })();
+  </script>
+</head>
+<body class="main-wrap">
+
+  <!-- ── Navigation ──────────────────────────────────────────────── -->
+  <nav class="nav-root">
+    <div class="nav-inner">
+      <div class="nav-bar">
+        <div class="flex items-center">
+          <a href="index.html" class="nav-logo">
+            <span class="nav-logo-star">✦</span>
+            <span class="nav-logo-text gradient-text-gold-sky text-glow-gold">MyTripPlanner</span>
+          </a>
+        </div>
+        <div class="nav-links">
+          <a href="index.html"   class="nav-link">Dashboard</a>
+          <a href="planner.html" class="nav-link"><i data-lucide="map"></i>Itinerary Planner</a>
+          <a href="food.html"    class="nav-link"><i data-lucide="utensils"></i>Food Hunter</a>
+          <a href="nearby.html"  class="nav-link"><i data-lucide="navigation"></i>Nearby Me</a>
+        </div>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+            <span id="icon-sun"  style="display:none"><i data-lucide="sun"></i></span>
+            <span id="icon-moon"><i data-lucide="moon"></i></span>
+          </button>
+          <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu">
+            <span id="icon-menu-open" ><i data-lucide="menu"></i></span>
+            <span id="icon-menu-close" style="display:none"><i data-lucide="x"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="mobile-menu-inner">
+        <a href="index.html"   class="nav-link">Dashboard</a>
+        <a href="planner.html" class="nav-link"><i data-lucide="map"></i>Itinerary Planner</a>
+        <a href="food.html"    class="nav-link"><i data-lucide="utensils"></i>Food Hunter</a>
+        <a href="nearby.html"  class="nav-link"><i data-lucide="navigation"></i>Nearby Me</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main ────────────────────────────────────────────────────── -->
+  <main class="main-wrap bg-surface">
+    <div class="content-area space-y-12">
+
+      <!-- Page heading -->
+      <div class="page-header">
+        <h1><span class="gradient-text-gold-sky">AI Itinerary Planner</span></h1>
+        <p>Craft your perfect trip with AI-powered route optimisation, hidden gems, and smart scheduling.</p>
+      </div>
+
+      <!-- ── Planner Form ─────────────────────────────────────────── -->
+      <div class="bg-card border border-border rounded-2xl p-6 md:p-8 shadow-glow-gold max-w-4xl mx-auto w-full">
+        <form id="planner-form" class="space-y-6">
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Destinations -->
+            <div class="space-y-2">
+              <label class="form-label" for="destination">
+                <i data-lucide="map-pin" style="color:var(--color-sky)"></i>
+                Destinations / Cities
+              </label>
+              <input id="destination" type="text" class="form-input"
+                     placeholder="e.g. Tokyo, Kyoto, Osaka" required />
+            </div>
+
+            <!-- Start date -->
+            <div class="space-y-2">
+              <label class="form-label" for="start-date">
+                <i data-lucide="calendar" style="color:var(--color-sky)"></i>
+                Tentative Start Date (Optional)
+              </label>
+              <input id="start-date" type="text" class="form-input"
+                     placeholder="YYYY-MM-DD" />
+              <p class="form-hint">Helps AI check for local holidays &amp; events</p>
+            </div>
+
+            <!-- Must-see spots -->
+            <div class="space-y-2 md:col-span-2">
+              <label class="form-label">
+                <i data-lucide="sparkles" style="color:var(--color-gold)"></i>
+                Must-See Spots (Optional)
+              </label>
+              <div id="spot-tags" class="flex flex-wrap gap-2" style="display:none!important"></div>
+              <div class="relative">
+                <input id="spot-input" type="text" class="form-input focus-emerald"
+                       placeholder="Enter a destination first, then pick spots" />
+                <div id="suggestions-dropdown" class="suggestions-dropdown" style="display:none">
+                  <p style="font-size:0.625rem;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem"
+                     id="suggestions-label">Suggested spots</p>
+                  <div id="suggestions-list" class="flex flex-wrap"></div>
+                </div>
+              </div>
+              <p class="form-hint">Press Enter or , to add a custom spot</p>
+            </div>
+
+            <!-- Trip Vibe -->
+            <div class="space-y-2">
+              <label class="form-label" for="vibe">
+                <i data-lucide="compass" style="color:var(--color-gold)"></i>
+                Trip Vibe
+              </label>
+              <select id="vibe" class="form-input">
+                <option value="Adventure &amp; Action">Adventure &amp; Action</option>
+                <option value="Relaxing &amp; Leisurely">Relaxing &amp; Leisurely</option>
+                <option value="Budget &amp; Thrifty">Budget &amp; Thrifty</option>
+                <option value="Luxury &amp; Indulgence">Luxury &amp; Indulgence</option>
+                <option value="Culture &amp; History">Culture &amp; History</option>
+              </select>
+            </div>
+
+            <!-- Traveling With -->
+            <div class="space-y-2">
+              <label class="form-label" for="companion">
+                <i data-lucide="users" style="color:var(--color-emerald)"></i>
+                Traveling With
+              </label>
+              <select id="companion" class="form-input">
+                <option value="Solo Explorer">Solo Explorer</option>
+                <option value="Couple">Couple</option>
+                <option value="Friends Group">Friends Group</option>
+                <option value="Family with Kids">Family with Kids</option>
+              </select>
+            </div>
+
+            <!-- Pacing -->
+            <div class="space-y-2">
+              <label class="form-label" for="pacing">
+                <i data-lucide="activity" style="color:var(--color-sky)"></i>
+                Pacing
+              </label>
+              <select id="pacing" class="form-input">
+                <option value="Packed (See everything)">Packed (See everything)</option>
+                <option value="Medium (Balanced)" selected>Medium (Balanced)</option>
+                <option value="Chill (1-2 main events a day)">Chill (1-2 main events a day)</option>
+              </select>
+            </div>
+
+            <!-- Crowd Preference -->
+            <div class="space-y-2">
+              <label class="form-label">
+                <i data-lucide="users" style="color:var(--color-sky)"></i>
+                Crowd Preference
+              </label>
+              <button type="button" id="crowd-toggle" class="toggle-btn">
+                <div class="toggle-track">
+                  <div class="toggle-thumb"></div>
+                </div>
+                <span id="crowd-label">No crowd preference</span>
+              </button>
+            </div>
+
+            <!-- Duration -->
+            <div class="space-y-2">
+              <label class="form-label" for="days">
+                <i data-lucide="calendar" style="color:var(--color-sky)"></i>
+                Duration (Days)
+              </label>
+              <input id="days" type="number" min="1" max="21" value="7" class="form-input" required />
+            </div>
+
+          </div><!-- end grid -->
+
+          <!-- Accommodation preference -->
+          <div class="space-y-3">
+            <label class="form-label">
+              <i data-lucide="bed-double" style="color:var(--color-gold)"></i>
+              Accommodation Preference
+            </label>
+            <div class="flex flex-wrap gap-2" id="tier-buttons">
+              <button type="button" class="tier-btn active-sky" data-tier="No Preference">
+                <i data-lucide="hotel"></i>
+                <span>No Preference</span>
+                <span style="font-size:0.75rem;opacity:0.6">— Show all 3 tiers</span>
+              </button>
+              <button type="button" class="tier-btn" data-tier="Budget">
+                <i data-lucide="star"></i>
+                <span>Budget</span>
+                <span style="font-size:0.75rem;opacity:0.6">— Hostels &amp; guesthouses</span>
+              </button>
+              <button type="button" class="tier-btn" data-tier="Mid-Range">
+                <i data-lucide="gem"></i>
+                <span>Mid-Range</span>
+                <span style="font-size:0.75rem;opacity:0.6">— 3-star &amp; boutique</span>
+              </button>
+              <button type="button" class="tier-btn" data-tier="Luxury">
+                <i data-lucide="crown"></i>
+                <span>Luxury</span>
+                <span style="font-size:0.75rem;opacity:0.6">— 4-5 star &amp; resorts</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Error -->
+          <div id="error-box" class="error-box" style="display:none"></div>
+
+          <!-- Submit -->
+          <button type="submit" id="generate-btn" class="btn-generate">
+            <i data-lucide="sparkles"></i>
+            <span id="generate-label">Generate My Itinerary</span>
+          </button>
+
+        </form>
+      </div><!-- end form card -->
+
+      <!-- ── Results ───────────────────────────────────────────────── -->
+      <div id="results" style="display:none" class="space-y-10 animate-fade-slide">
+
+        <!-- Trip header -->
+        <div id="trip-header" class="text-center space-y-4"></div>
+
+        <!-- Tab bar -->
+        <div class="tab-bar mt-2">
+          <button class="tab-btn active" data-tab="itinerary">
+            <i data-lucide="calendar"></i> Itinerary
+          </button>
+          <button class="tab-btn" data-tab="stays">
+            <i data-lucide="hotel"></i> Stays
+          </button>
+          <button class="tab-btn" data-tab="budget">
+            <i data-lucide="wallet"></i> Budget
+          </button>
+        </div>
+
+        <!-- Tab panels -->
+        <div id="tab-itinerary" class="tab-panel pt-2"></div>
+        <div id="tab-stays"     class="tab-panel pt-2" style="display:none"></div>
+        <div id="tab-budget"    class="tab-panel pt-2" style="display:none"></div>
+
+      </div><!-- end results -->
+
+    </div><!-- end content-area -->
+  </main>
+
+  <script src="js/nav.js"></script>
+  <script src="js/planner.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
