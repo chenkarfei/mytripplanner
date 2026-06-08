@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyTripPlanner | Smart Travel</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ["'Space Grotesk'", 'ui-monospace', 'monospace'],
+            sans: ["'Inter'", 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            gold:    { DEFAULT: '#D4AF37', muted: '#A88D52' },
+            sky:     '#0EA5E9',
+            emerald: '#10B981',
+            rose:    '#F43F5E',
+            warning: '#F59E0B',
+            primary: '#0B1F3A',
+            'dark-card':        '#0F2847',
+            'dark-card-hover':  '#152E52',
+            'dark-border':      '#1E3A5F',
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <!-- Theme must be applied before body renders to avoid flash -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      if (t === 'dark') document.documentElement.setAttribute('data-theme','dark');
+    })();
+  </script>
+</head>
+<body class="main-wrap">
+
+  <!-- ── Navigation ──────────────────────────────────────────────── -->
+  <nav class="nav-root">
+    <div class="nav-inner">
+      <div class="nav-bar">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <a href="index.html" class="nav-logo">
+            <span class="nav-logo-star">✦</span>
+            <span class="nav-logo-text gradient-text-gold-sky text-glow-gold">MyTripPlanner</span>
+          </a>
+        </div>
+
+        <!-- Desktop links -->
+        <div class="nav-links">
+          <a href="index.html"   class="nav-link">Dashboard</a>
+          <a href="planner.html" class="nav-link">
+            <i data-lucide="map"></i>Itinerary Planner
+          </a>
+          <a href="food.html"    class="nav-link">
+            <i data-lucide="utensils"></i>Food Hunter
+          </a>
+          <a href="nearby.html"  class="nav-link">
+            <i data-lucide="navigation"></i>Nearby Me
+          </a>
+        </div>
+
+        <!-- Actions -->
+        <div class="nav-actions">
+          <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+            <span id="icon-sun"  style="display:none"><i data-lucide="sun"></i></span>
+            <span id="icon-moon"><i data-lucide="moon"></i></span>
+          </button>
+          <button id="hamburger-btn" class="hamburger-btn" aria-label="Open menu">
+            <span id="icon-menu-open" ><i data-lucide="menu"></i></span>
+            <span id="icon-menu-close" style="display:none"><i data-lucide="x"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="mobile-menu-inner">
+        <a href="index.html"   class="nav-link">Dashboard</a>
+        <a href="planner.html" class="nav-link">
+          <i data-lucide="map"></i>Itinerary Planner
+        </a>
+        <a href="food.html"    class="nav-link">
+          <i data-lucide="utensils"></i>Food Hunter
+        </a>
+        <a href="nearby.html"  class="nav-link">
+          <i data-lucide="navigation"></i>Nearby Me
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main ────────────────────────────────────────────────────── -->
+  <main class="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 mt-12"
+        style="background: radial-gradient(ellipse at top, var(--color-card), var(--color-surface), var(--color-surface));">
+    <div class="max-w-5xl w-full space-y-12 mb-16">
+
+      <!-- Hero -->
+      <div class="text-center space-y-5">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-card text-xs font-medium text-text-muted mb-2">
+          <span style="color:var(--color-gold)">✦</span> AI-powered travel planning
+        </div>
+        <h1 class="font-mono text-5xl md:text-7xl font-bold tracking-tighter text-text">Ready to <span class="gradient-text-gold-sky-emerald">Explore?</span></h1>
+        <p class="text-text-muted text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+          Your intelligent co-pilot for predicting the perfect route, the ultimate itinerary, and whatever you need right now.
+        </p>
+      </div>
+
+      <!-- Feature cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- AI Itinerary Planner -->
+        <a href="planner.html" class="feature-card sky-card">
+          <div class="feature-icon-wrap">
+            <i data-lucide="map" style="color:var(--color-sky)"></i>
+          </div>
+          <h3 class="feature-title">AI Itinerary Planner</h3>
+          <p class="feature-desc">
+            Generate hyper-personalized day-by-day schedules with tips, hidden gems, and travel times based on your trip vibe.
+          </p>
+          <div class="feature-cta">
+            Launch module <i data-lucide="arrow-right"></i>
+          </div>
+        </a>
+
+        <!-- Route Food Hunter -->
+        <a href="food.html" class="feature-card gold-card">
+          <div class="feature-icon-wrap">
+            <i data-lucide="utensils" style="color:var(--color-gold)"></i>
+          </div>
+          <h3 class="feature-title">Route Food Hunter</h3>
+          <p class="feature-desc">
+            Input your start and end points. Discover incredible restaurants along your exact route without massive detours.
+          </p>
+          <div class="feature-cta">
+            Launch module <i data-lucide="arrow-right"></i>
+          </div>
+        </a>
+
+        <!-- Nearby Essentials -->
+        <a href="nearby.html" class="feature-card emerald-card">
+          <div class="feature-icon-wrap">
+            <i data-lucide="navigation" style="color:var(--color-emerald)"></i>
+          </div>
+          <h3 class="feature-title">Nearby Essentials</h3>
+          <p class="feature-desc">
+            Emergency? Late night cravings? Find the closest strictly open ATMs, hospitals, and food spots instantly.
+          </p>
+          <div class="feature-cta">
+            Launch module <i data-lucide="arrow-right"></i>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="js/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

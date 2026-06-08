@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\User\\\\OneDrive\\\\Documents\\\\Fei\\\\AI\\\\Website\\\\Project\\\\mytripplanner\\\\components\" -Recurse -File | ForEach-Object { $_.FullName })"
+    ]
+  }
+}
